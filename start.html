@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WaysModzz AI Chatbot</title>
+    
+    <!-- Import TailwindCSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Import Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+        /* Global Styles */
+        html, body {
+            font-family: 'Poppins', sans-serif;
+            background: #0f172a;
+            color: white;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            min-height: 100%;
+            font-size: 16px;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0;
+            position: relative;
+            text-align: center;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        /* Efek jaringan */
+        #particles-js {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Kontainer utama */
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 100%;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+        }
+
+        .hero-section {
+            width: 100%;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            min-height: 60vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .badge {
+            background: rgba(99, 102, 241, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #e2e8f0;
+            margin-bottom: 25px;
+            display: inline-block;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Heading utama - LARGER as requested */
+        h1 {
+            font-size: 4.5rem; /* Increased from 4rem */
+            font-weight: 800;
+            line-height: 1.1;
+            background: linear-gradient(90deg, #60a5fa, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 25px; /* Increased margin */
+            text-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+            letter-spacing: -1px; /* Added for better readability at large size */
+        }
+
+        h1 span {
+            display: block;
+        }
+
+        /* Deskripsi - SMALLER as requested */
+        .hero-description {
+            font-size: 1.15rem; /* Decreased from 1.3rem */
+            color: #e2e8f0;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            max-width: 650px; /* Decreased from 700px */
+            padding: 0 15px;
+        }
+
+        /* Tombol - enhanced and larger */
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(90deg, #4f46e5, #7c3aed);
+            padding: 18px 40px;
+            border-radius: 12px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            z-index: 20;
+            margin: 15px 0;
+            transform: translateZ(0);
+        }
+
+        .cta-button:hover, .cta-button:focus {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.7);
+        }
+        
+        .cta-button:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+        
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%);
+        }
+        
+        .cta-button:hover::after {
+            animation: shine 1.5s infinite;
+        }
+        
+        @keyframes shine {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        /* Features section - enhanced */
+        .features-section {
+            width: 100%;
+            padding: 70px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.6);
+        }
+
+        .features-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            flex: 1 1 300px;
+            max-width: 350px;
+            padding: 35px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: 16px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.3);
+            border-color: rgba(99, 102, 241, 0.4);
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #4f46e5, #7c3aed);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 50%;
+            margin-bottom: 25px;
+            font-size: 32px;
+            color: #818cf8;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+        }
+        
+        .feature-title {
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #f8fafc;
+        }
+        
+        .feature-desc {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3.5rem; /* Increased from 3rem */
+            }
+            
+            .hero-description {
+                font-size: 1.1rem; /* Decreased from 1.2rem */
+                padding: 0 15px;
+            }
+            
+            .feature-card {
+                flex: 1 1 100%;
+                max-width: 100%;
+                margin-bottom: 20px;
+            }
+            
+            .cta-button {
+                padding: 16px 32px;
+                font-size: 1.3rem;
+            }
+            
+            .hero-section {
+                min-height: 50vh;
+                padding: 40px 20px;
+            }
+            
+            .badge {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.8rem; /* Increased from 2.5rem */
+            }
+            
+            .badge {
+                font-size: 0.9rem;
+                padding: 7px 14px;
+            }
+            
+            .feature-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 28px;
+            }
+            
+            .feature-title {
+                font-size: 1.3rem;
+            }
+            
+            .feature-desc {
+                font-size: 1.1rem;
+            }
+            
+            .hero-description {
+                font-size: 1rem; /* Decreased from 1.1rem */
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Floating animation */
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* Glow effect */
+        .glow {
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+            }
+            to {
+                box-shadow: 0 0 30px rgba(99, 102, 241, 0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Efek jaringan -->
+    <div id="particles-js"></div>
+
+    <div class="container">
+        <section class="hero-section">
+            <div class="badge glow">Generative AI</div>
+            <h1 class="fade-in">
+                <span>Chat Smarter.</span>
+                <span>With WaysModzz AI.</span>
+            </h1>
+            <p class="hero-description fade-in">Jelajahi kecerdasan buatan yang siap membantu kapan saja, di mana saja. WaysModzz AI memberikan jawaban cerdas dan solusi yang Anda butuhkan.</p>
+            <a href="https://painzysite.biz.id/chat.html" class="cta-button floating glow fade-in">Mulai Chat</a>
+        </section>
+
+        <section class="features-section">
+            <div class="features-container">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="feature-title">Respon Cepat</h3>
+                    <p class="feature-desc">Dapatkan jawaban instan untuk pertanyaan Anda</p>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <h3 class="feature-title">Akses 24/7</h3>
+                    <p class="feature-desc">Tersedia kapan saja Anda membutuhkan</p>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Keamanan</h3>
+                    <p class="feature-desc">Privasi dan keamanan data terjamin</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Script Particles.js -->
+    <script>
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 100, density: { enable: true, value_area: 1000 } },
+                color: { value: "#6366f1" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false } },
+                size: { value: 3, random: true },
+                line_linked: { 
+                    enable: true, 
+                    distance: 150, 
+                    color: "#6366f1", 
+                    opacity: 0.3, 
+                    width: 1 
+                },
+                move: { 
+                    enable: true, 
+                    speed: 1, 
+                    direction: "none", 
+                    random: true, 
+                    straight: false, 
+                    out_mode: "out", 
+                    bounce: false 
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                },
+                modes: {
+                    grab: { distance: 140, line_linked: { opacity: 0.5 } },
+                    push: { particles_nb: 4 }
+                }
+            },
+            retina_detect: true
+        });
+        
+        // Fade-in animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            
+            function checkFade() {
+                fadeElements.forEach(element => {
+                    setTimeout(() => {
+                        element.classList.add('active');
+                    }, 100);
+                });
+            }
+            
+            // Initial check
+            checkFade();
+            
+            // Check on scroll
+            window.addEventListener('scroll', checkFade);
+        });
+    </script>
+</body>
+</html>
